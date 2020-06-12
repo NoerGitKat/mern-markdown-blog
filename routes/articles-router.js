@@ -5,6 +5,6 @@ const articlesRouter = express.Router();
 const { getNewArticleForm, createArticle, getNewArticle } = require('./../controllers/articles-controllers');
 
 articlesRouter.route('/new').get(getNewArticleForm).post(createArticle);
-articlesRouter.route('/:id').get(getNewArticle);
+articlesRouter.route('/:slug').get(getNewArticle);
 
 module.exports = articlesRouter;

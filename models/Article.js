@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const marked = require('marked');
+const slugify = require('slugify');
+
 const Schema = mongoose.Schema;
 
 const articleSchema = new Schema({
@@ -17,6 +20,18 @@ const articleSchema = new Schema({
 		type: Date,
 		default: () => Date.now(),
 	},
+	slug: {
+		type: String,
+		required: true,
+		unique: true,
+	},
+});
+
+articleSchema.pre('validate', (next) => {
+	if (this.title) {
+		this.slug = slugify(this.title, { lower: true, strict: true });
+	}
+	next();
 });
 
 const articleModel = mongoose.model('articles', articleSchema);
