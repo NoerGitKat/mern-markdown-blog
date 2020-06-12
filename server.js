@@ -1,4 +1,5 @@
 const express = require('express');
+const expressLayouts = require('express-ejs-layouts');
 const app = express();
 
 const connectDB = require('./utils/connectDB');
@@ -8,6 +9,8 @@ const articlesRouter = require('./routes/articles-router');
 
 // Set view engine
 app.set('view engine', 'ejs');
+
+app.use(expressLayouts);
 app.use(express.urlencoded({ extended: false }));
 app.use('/articles', articlesRouter);
 
