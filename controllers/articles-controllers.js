@@ -1,3 +1,5 @@
+const slugify = require('slugify');
+
 const Article = require('./../models/Article');
 
 const getAllArticles = async (req, res) => {
@@ -33,7 +35,7 @@ const createArticle = async (req, res) => {
 		title,
 		description,
 		markdown,
-		slug: title,
+		slug: slugify(title, { lower: true, strict: true }),
 	});
 
 	try {
@@ -45,9 +47,19 @@ const createArticle = async (req, res) => {
 	}
 };
 
-const editArticle = (req, res) => {};
+const editArticle = async (req, res) => {
+	const { slug } = req.params;
+};
 
-const deleteArticle = (req, res) => {};
+const deleteArticle = async (req, res) => {
+	const { id } = req.params;
+	try {
+		await Article.findByIdAndDelete(id);
+		res.redirect('/');
+	} catch (err) {
+		console.log(err);
+	}
+};
 
 exports.getAllArticles = getAllArticles;
 exports.getNewArticleForm = getNewArticleForm;

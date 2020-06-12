@@ -1,6 +1,7 @@
 // Dependencies
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
+const methodOverride = require('method-override');
 const app = express();
 
 const connectDB = require('./utils/connectDB');
@@ -15,6 +16,7 @@ const { getAllArticles } = require('./controllers/articles-controllers');
 app.set('view engine', 'ejs');
 
 app.use(expressLayouts);
+app.use(methodOverride('_method'));
 app.use(express.urlencoded({ extended: false }));
 
 // Routes
