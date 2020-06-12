@@ -58,7 +58,6 @@ const editArticle = async (req, res) => {
 	const { id } = req.params;
 	try {
 		const foundArticle = await Article.findById(id);
-		console.log('foundArticle', foundArticle);
 		res.render('articles/edit', { article: foundArticle });
 	} catch (err) {
 		console.log(err);

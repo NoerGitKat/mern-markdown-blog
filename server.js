@@ -15,6 +15,7 @@ const { getAllArticles } = require('./controllers/articles-controllers');
 // Set view engine
 app.set('view engine', 'ejs');
 
+app.use(express.static(__dirname + '/public'));
 app.use(expressLayouts);
 app.use(methodOverride('_method'));
 app.use(express.urlencoded({ extended: false }));
