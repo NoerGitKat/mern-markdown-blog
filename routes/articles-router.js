@@ -11,7 +11,8 @@ const {
 } = require('./../controllers/articles-controllers');
 
 articlesRouter.route('/new').get(getNewArticleForm).post(createArticle);
-articlesRouter.route('/:slug').get(getNewArticle).post(editArticle);
-articlesRouter.route('/:id').delete(deleteArticle);
+articlesRouter.route('/edit/:id').get(editArticle);
+articlesRouter.route('/:slug').get(getNewArticle);
+articlesRouter.route('/:id').put(editArticle).delete(deleteArticle);
 
 module.exports = articlesRouter;

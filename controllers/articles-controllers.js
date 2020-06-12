@@ -1,4 +1,8 @@
 const slugify = require('slugify');
+const marked = require('marked'); // Converts markdown to HTML
+const { JSDOM } = require('jsdom'); // Emulates web browser
+const createDOMPurifier = require('dompurify'); // Helps sanitize HTML
+const domPurifier = createDOMPurifier(new JSDOM().window);
 
 const Article = require('./../models/Article');
 
@@ -31,11 +35,14 @@ const getNewArticle = async (req, res) => {
 const createArticle = async (req, res) => {
 	const { title, description, markdown } = req.body;
 
+	const mdHTML = marked(markdown);
+
 	let newArticle = new Article({
 		title,
 		description,
 		markdown,
 		slug: slugify(title, { lower: true, strict: true }),
+		sanitizedHTML: domPurifier.sanitize(mdHTML),
 	});
 
 	try {
@@ -48,7 +55,14 @@ const createArticle = async (req, res) => {
 };
 
 const editArticle = async (req, res) => {
-	const { slug } = req.params;
+	const { id } = req.params;
+	try {
+		const foundArticle = await Article.findById(id);
+		console.log('foundArticle', foundArticle);
+		res.render('articles/edit', { article: foundArticle });
+	} catch (err) {
+		console.log(err);
+	}
 };
 
 const deleteArticle = async (req, res) => {

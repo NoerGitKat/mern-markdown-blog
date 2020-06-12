@@ -25,6 +25,10 @@ app.use('/articles', articlesRouter);
 
 app.get('/', getAllArticles);
 
+app.get('*', (req, res) => {
+	res.redirect('/');
+});
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
