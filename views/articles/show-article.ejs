@@ -13,11 +13,7 @@
 	</head>
 	<body>
 		<div class="container">
-			<h1 class="mb-4">New Article</h1>
-
-			<form action="/articles/new" method="POST">
-				<%- include('_form_fields') %>
-			</form>
+			<h1 class="mb-4"><%= article.title %></h1>
 		</div>
 	</body>
 </html>

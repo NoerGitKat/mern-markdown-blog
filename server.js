@@ -1,13 +1,18 @@
 const express = require('express');
 const app = express();
 
-// Set view engine
-app.set('view engine', 'ejs');
+const connectDB = require('./utils/connectDB');
 
 // Routes
 const articlesRouter = require('./routes/articles-router');
 
+// Set view engine
+app.set('view engine', 'ejs');
+app.use(express.urlencoded({ extended: false }));
 app.use('/articles', articlesRouter);
+
+// Connect to DB
+connectDB();
 
 app.get('/', (req, res) => {
 	const articles = [
